@@ -1,0 +1,56 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+	        <li class="active"><a href="#A" data-toggle="tab">专业编辑</a></li>
+	    </ul>
+		<form class="form-horizontal js-ajax-form" action="{:U('Types/majoredit_post')}" method="post">
+			<div class="tabbable">
+		        <div class="tab-content">
+		          <div class="tab-pane active" id="A">
+						<fieldset>
+						   <div class="control-group">
+								<label class="control-label">所属分类</label>
+								<div class="controls">
+								    <select name="tid">
+							            <!--  <option value="">选择分类</option> -->
+							              <volist name="types" id="vo">
+
+							                   <eq name="vo.tid" value="$pr.tid">
+							                       <option value="{$vo.tid}" selected >{$vo.title}</option>
+							                    <else />
+							                       <option value="{$vo.tid}" >{$vo.title}</option>
+							                   </eq> 
+
+							            </volist> 
+                                      </select>
+									<!-- <select name="tid">
+                                      <foreach name="types" item="vo">  
+										   <eq name="vo.tid" value="$pr.tid">
+							                   <option value="{$vo.tid}" selected >{$vo.title}</option>
+							                <else />
+							                   <option value="{$vo.tid}" >{$vo.title}</option>
+							               </eq> 
+								      </foreach>>
+									</select> -->
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label">专业标题</label>
+								<div class="controls">
+									<input type="text" name="ptitle" value="{$pr.ptitle}"><span class="form-required">*</span>
+									<input type="hidden" name="pid" value="{$pr.pid}">
+								</div>
+							</div>
+						</fieldset>
+		          </div>
+		    <div class="form-actions">
+		     	<button class="btn btn-primary js-ajax-submit"type="submit">保存</button>
+		      	<a class="btn" href="javascript:history.back(-1);">{:L('BACK')}</a>
+		    </div>
+		</form>
+	</div>
+	<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

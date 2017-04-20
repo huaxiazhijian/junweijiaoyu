@@ -1,0 +1,73 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="{:U('Types/classindex')}">科目管理</a></li>
+			<li><a href="{:U('Types/classadd')}">科目添加</a></li>
+		</ul>
+		<form class="js-ajax-form" method="post">
+			<div class="table-actions">
+				<button class="btn btn-danger btn-small js-ajax-submit" type="submit" data-action="{:U('Types/classdelete')}" data-subcheck="true" data-msg="{:L('DELETE_CONFIRM_MESSAGE')}">{:L('DELETE')}</button>
+			</div>
+			<table class="table table-hover table-bordered table-list">
+				<thead>
+					<tr>
+						<th width="16"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
+						<th width="85">ID</th>
+						<th>科目名称</th>
+						<!-- <th>点击量</th> -->
+						<th width="85">所属分类</th>
+						<th width="85">所属专业</th>
+						<th width="85"><span>添加时间</span></th>
+						<th width="90">{:L('ACTIONS')}</th>
+					</tr>
+				</thead>
+				<foreach name="class" item="vo">
+				<tr>
+					<td><input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="sids[]" value="{$vo.sid}"></td>
+					<td><a>{$vo.sid}</a></td>
+					<td>{$vo.stitle}</td>
+					<td>{$vo.title}</td>
+					<td>{$vo.ptitle}</td>
+					<td>{$vo.stime|date='Y-m-d H:i:s',###}</td>
+					<td>
+						<a href="{:U('Types/classedit',array('sid'=>$vo['sid']))}">{:L('EDIT')}</a>|
+						<a href="{:U('Types/classdelete',array('sid'=>$vo['sid']))}" class="js-ajax-delete">{:L('DELETE')}</a>
+					</td>
+				</tr>
+				</foreach>
+				<tfoot>
+					<tr>
+						<th width="16"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
+						<th width="85">ID</th>
+						<th>科目名称</th>
+						<!-- <th>点击量</th> -->
+						<th width="85">所属分类</th>
+						<th width="85">所属专业</th>
+						<th width="85"><span>添加时间</span></th>
+						<th width="90">{:L('ACTIONS')}</th>
+					</tr>
+				</tfoot>
+			</table>
+			<div class="table-actions">
+				<button class="btn btn-danger btn-small js-ajax-submit" type="submit" data-action="{:U('Types/classdelete')}" data-subcheck="true" data-msg="你确定删除吗？">{:L('DELETE')}</button>
+			</div>
+			<div class="pagination">{$page}</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script>
+		setCookie('refersh_time', 0);
+		function refersh_window() {
+			var refersh_time = getCookie('refersh_time');
+			if (refersh_time == 1) {
+				window.location.reload();
+			}
+		}
+		setInterval(function() {
+			refersh_window()
+		}, 2000);
+	</script>
+</body>
+</html>

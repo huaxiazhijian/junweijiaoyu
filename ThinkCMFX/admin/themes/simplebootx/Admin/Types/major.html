@@ -1,0 +1,70 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="{:U('Types/major')}">专业管理</a></li>
+			<li><a href="{:U('Types/majoradd')}">专业添加</a></li>
+		</ul>
+		<form class="js-ajax-form" method="post">
+			<div class="table-actions">
+				<button class="btn btn-danger btn-small js-ajax-submit" type="submit" data-action="{:U('Types/majordelete')}" data-subcheck="true" data-msg="{:L('DELETE_CONFIRM_MESSAGE')}">{:L('DELETE')}</button>
+			</div>
+			<table class="table table-hover table-bordered table-list">
+				<thead>
+					<tr>
+						<th width="16"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
+						<th width="100">ID</th>
+						<th>专业名称</th>
+						<!-- <th>点击量</th> -->
+						<th width="90">所属分类</th>
+						<th width="110"><span>添加时间</span></th>
+						<th width="120">{:L('ACTIONS')}</th>
+					</tr>
+				</thead>
+				<foreach name="major" item="vo">
+				<tr>
+					<td><input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="pids[]" value="{$vo.pid}"></td>
+					<td><a>{$vo.pid}</a></td>
+					<td>{$vo.ptitle}</td>
+					<td>{$vo.title}</td>
+					<td>{$vo.ptime|date='Y-m-d H:i:s',###}</td>
+					<td>
+						<a href="{:U('Types/majoredit',array('pid'=>$vo['pid']))}">{:L('EDIT')}</a>|
+						<a href="{:U('Types/majordelete',array('pid'=>$vo['pid']))}" class="js-ajax-delete">{:L('DELETE')}</a>
+					</td>
+				</tr>
+				</foreach>
+				<tfoot>
+					<tr>
+						<th width="16"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
+						<th width="100">ID</th>
+						<th>专业名称</th>
+						<!-- <th>点击量</th> -->
+						<th width="90">所属分类</th>
+						<th width="110"><span>添加时间</span></th>
+						<th width="120">{:L('ACTIONS')}</th>
+					</tr>
+				</tfoot>
+			</table>
+			<div class="table-actions">
+				<button class="btn btn-danger btn-small js-ajax-submit" type="submit" data-action="{:U('Types/majordelete')}" data-subcheck="true" data-msg="你确定删除吗？">{:L('DELETE')}</button>
+			</div>
+			<div class="pagination">{$page}</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script>
+		setCookie('refersh_time', 0);
+		function refersh_window() {
+			var refersh_time = getCookie('refersh_time');
+			if (refersh_time == 1) {
+				window.location.reload();
+			}
+		}
+		setInterval(function() {
+			refersh_window()
+		}, 2000);
+	</script>
+</body>
+</html>

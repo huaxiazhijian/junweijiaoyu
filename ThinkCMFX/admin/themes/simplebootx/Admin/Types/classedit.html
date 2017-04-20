@@ -1,0 +1,57 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+	        <li class="active"><a href="#A" data-toggle="tab">科目编辑</a></li>
+	    </ul>
+		<form class="form-horizontal js-ajax-form" action="{:U('Types/classedit_post')}" method="post">
+			<div class="tabbable">
+		        <div class="tab-content">
+		          <div class="tab-pane active" id="A">
+						<fieldset>
+						   <div class="control-group">
+								<label class="control-label">所属专业</label>
+								<div class="controls">
+								      <select name="pid">
+							            <!--  <option value="">选择分类</option> -->
+							              <volist name="pr" id="vo">
+
+							                   <eq name="vo.pid" value="$su.pid">
+							                       <option value="{$vo.pid}" selected >{$vo.ptitle}</option>
+							                    <else />
+							                       <option value="{$vo.pid}" >{$vo.ptitle}</option>
+							                   </eq> 
+
+							            </volist> 
+                                      </select>
+
+									<!-- <select name="pid">
+                                      <foreach name="pr" item="vo">  
+										<option value="{$vo.pid}" 
+										    {if "{$vo.pid}" eq "{$su.pid}"}
+                                              selected
+										    {/if}
+										>{$vo.ptitle}</option>
+								      </foreach>
+									</select> -->
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label">科目标题</label>
+								<div class="controls">
+									<input type="text" name="stitle" value="{$su.stitle}"><span class="form-required">*</span>
+									<input type="hidden" name="sid" value="{$su.sid}">
+								</div>
+							</div>
+						</fieldset>
+		          </div>
+		    <div class="form-actions">
+		     	<button class="btn btn-primary js-ajax-submit"type="submit">保存</button>
+		      	<a class="btn" href="javascript:history.back(-1);">{:L('BACK')}</a>
+		    </div>
+		</form>
+	</div>
+	<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

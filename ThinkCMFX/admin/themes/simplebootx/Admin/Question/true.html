@@ -3,8 +3,8 @@
 <body>
 	<div class="wrap js-check-wrap">
 		<ul class="nav nav-tabs">
-			<li class="active"><a href="{:U('Question/itembank')}">题库管理</a></li>
-			<li><a href="{:U('Question/itembankadd')}">考题添加</a></li>
+			<li class="active"><a href="{:U('Question/true')}">真题管理</a></li>
+			<li><a href="{:U('Question/trueadd')}">真题添加</a></li>
 		</ul>
 		<form class="well form-search" method="post" action="{:U('Question/itembank')}">
 			 题干： 
@@ -14,7 +14,7 @@
 		</form>
 		<form class="js-ajax-form" method="post">
 			<div class="table-actions">
-				<button class="btn btn-danger btn-small js-ajax-submit" type="submit" data-action="{:U('Question/itembankdelete')}" data-subcheck="true" data-msg="{:L('DELETE_CONFIRM_MESSAGE')}">{:L('DELETE')}</button>
+				<button class="btn btn-danger btn-small js-ajax-submit" type="submit" data-action="{:U('Question/turedelete')}" data-subcheck="true" data-msg="{:L('DELETE_CONFIRM_MESSAGE')}">{:L('DELETE')}</button>
 			</div>
 			<table class="table table-hover table-bordered table-list">
 				<thead>
@@ -23,7 +23,7 @@
 						<th width="120">ID</th>
 						<th>题干</th>
 						<!-- <th>点击量</th> -->
-						<!-- <th width="80">{:L('AUTHOR')}</th> -->
+						<th width="80">卷名</th>
 						<th width="80"><span>添加时间</span></th>
 						<th width="60"><span>考题类型</span></th>
 						<th width="125">{:L('ACTIONS')}</th>
@@ -33,15 +33,16 @@
 				<tr>
 					<td><input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="item_ids[]" value="{$vo.item_id}"></td>
 					<td><a>{$vo.item_id}</a></td>
-					<td><a href="{:U('Question/itembankshow',array('id'=>$vo['item_id']))}">{$vo.question}</a></td>
+					<td><a href="#">{$vo.question}</a></td>
+					<td>{$vo.eid}年国家司法考试试题</td>
 					<td>{$vo.itime|date='Y-m-d H:i:s',###}</td>
 					<td>
 						<if condition="$vo.te_type eq 1"> 多选题 
 						<elseif condition="$vo.te_type eq 0" /> 单选题 </if>
 					</td>
 					<td>
-						<a href="{:U('Question/itembankedit',array('item_id'=>$vo['item_id']))}">{:L('EDIT')}</a>|
-						<a href="{:U('Question/itembankdelete',array('item_id'=>$vo['item_id']))}" class="js-ajax-delete">{:L('DELETE')}</a>
+						<a href="{:U('Question/trueedit',array('item_id'=>$vo['item_id']))}">{:L('EDIT')}</a>|
+						<a href="{:U('Question/truedelete',array('item_id'=>$vo['item_id']))}" class="js-ajax-delete">{:L('DELETE')}</a>
 					</td>
 				</tr>
 				</foreach>
@@ -50,6 +51,7 @@
 						<th width="16"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
 						<th width="120">ID</th>
 						<th>题干</th>
+						<th width="80">卷名</th>
 						<!-- <th>点击量</th> -->
 						<!-- <th width="80">{:L('AUTHOR')}</th> -->
 						<th width="100"><span>添加时间</span></th>
@@ -59,7 +61,7 @@
 				</tfoot>
 			</table>
 			<div class="table-actions">
-				<button class="btn btn-danger btn-small js-ajax-submit" type="submit" data-action="{:U('Question/itembankdelete')}" data-subcheck="true" data-msg="你确定删除吗？">{:L('DELETE')}</button>
+				<button class="btn btn-danger btn-small js-ajax-submit" type="submit" data-action="{:U('Question/truedelete')}" data-subcheck="true" data-msg="你确定删除吗？">{:L('DELETE')}</button>
 			</div>
 			<div class="pagination">{$page}</div>
 		</form>

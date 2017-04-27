@@ -1,0 +1,150 @@
+<admintpl file="header" />
+
+	<style type="text/css">
+	*{ margin: 0 ; padding: 0;}
+	.jw-from li{ list-style: none; margin: 0; padding: 0;}
+	.jw-from ul{ margin: 0; padding: 0;}
+	.jw-from{  min-width: 800px; width: 100%;float: left; margin-top: 10px;}
+	.jw-from input,.jw-from textarea{ width: 50%; display: inline-block;border-radius:3px; border:#93A1A5 solid 1px; outline: none; line-height: 20px; padding:5px;font-family: "微软雅黑"; resize: none;}
+	.jw-from label{ width: 20%; font-family: "微软雅黑"; font-size: 16px;min-width: 100px;  display: inline-block; text-align: center;}
+	.jw-from p{ margin-bottom: 10px; width: 100%; float: left;min-width: 800px;}
+	.jw-from p span{ width: 23%; display: inline-block; line-height: 20px; font-family: "微软雅黑"; font-size: 12px; padding-left: 1%;}
+	.jw-from .textarea label{ line-height: 96px; float: left; }
+	.jw-from .textarea span{ line-height: 96px;float: left;}
+	.jw-from textarea{ float: left;}
+	.jw-from .shiti-tijiao{ width: 100%; height: 40px; background:#93A1A5 ; float: left;}
+	.jw-from .shiti-tijiao button{ width: 80px; height: 30px; margin: 5px;font-family: "微软雅黑";}
+	.jw-from #shiti-box li{ border-bottom:#2c3e50 dashed 1px ; float: left; padding: 30px 0 10px 0; width: 100%; height: auto;}
+	.jw-from #shiti-box{ width: 100%; min-width: 800px; float:left;}
+	.jw-from .shiti{ width: 100%; float: left;}
+	#radio{
+		width: 100%;
+
+	}
+	#radio input{
+		display: inline-block;
+		width: 5% !important;
+	}
+	</style>
+
+
+</head>
+<body>
+<div class="wrap J_check_wrap">
+<ul class="nav nav-tabs">
+    <li><a href="{:U('Question/itembank')}">所有试题</a></li>
+    <li><a href="{:U('Question/itembankadd')}">添加试题</a></li>
+    <li class="active"><a href="{:U('Question/mater')}" target="_self">添加材料试题</a></li>
+</ul>	
+		<div class="jw-from">
+		   <from action="{:U('Question/materadd_post')}" method="post" id="froms">	
+		   <div class="shiti">
+				   	<p class="textarea"><label>材料</label><textarea name="content" rows="4"></textarea></p>
+			</div>
+		   	
+		   	<ul id="shiti-box">
+			   	<li>
+				   	<div class="shiti">
+				   	<p>
+				   	  <label>试题类型</label>
+					   	  <select name="te_type" class="shitileixing">
+	                        <option value="0">单选题</option>
+	                        <option value="1">多选题</option>
+	                      </select>
+				   	</p>
+				   	<p>
+				   		<label>所属科目</label>
+				   		<select name="sid" class="suosukemu">
+                       <foreach name="su" item="vo">  
+										<option value="{$vo.sid}">{$vo.stitle}</option>
+					   </foreach>                
+					</select>
+				   	</p>
+				   	<p>
+				   		<label>所属章节</label>
+				   		<select name="cid" class="suosuzhangjie">
+                       <foreach name="ch" item="v">  
+										<option value="{$v.cid}">{$v.ctitle}</option>
+								      </foreach>                
+					</select>
+				   	</p>
+				   	<p><label>题干</label><input type="text" name=""question  class="tigan"/></p>
+				   	<p class="textarea"><label>选项</label><textarea name="options" rows="4"></textarea><span>A,B,C,D,各个选项用回车键隔开</span></p>''
+				   	<p><label>答案</label><input type="text" name="answer" hspace="4" class="daan" /><span>输入正确的答案单选 如：A多选A,B多个选项用英文逗号隔开</span></p>
+				   	<p class="textarea"><label>试题解析</label><textarea name="parsing" rows="4" class="shitijiexi"></textarea></p>
+				   	<p><label>分值</label><input type="text" name="score" value="1"  class="fenzhi"/></p>
+				   	<p class="textarea"><label>试题描述</label><textarea name="info" rows="4" class="shitimiaoshu"></textarea></p>
+				   	<p>
+				   	 <label>难易程度</label>
+				   	 <select name="difficulty" class="normal_select">
+                        <option value="0">简单</option>
+                        <option value="1">一般</option>
+                        <option value="2">困难</option>
+                    </select>	
+				   	</p>
+				   	</div>
+			   	</li>
+		   	   <input type="hidden" name="ncertain" value="1" class="nan">
+		   	</ul>
+		   	
+		   	<div class="shiti-tijiao">
+			   	<button id="tijiao">提交</button>
+			   	<button>返回</button>
+			   	<button id="addshiti">添加试题</button>
+		   	</div>
+		   	
+		   </from>	
+		</div>
+
+	</body>
+</html>
+<script>
+
+		$(document).ready(function(){
+
+
+			$("#tijiao").click(function(){
+
+				$("#froms").submit();
+
+
+
+				
+
+
+			})
+
+		
+
+
+
+
+
+
+
+
+		})
+
+
+		window.onload=function(){
+			var add=document.getElementById("addshiti");
+			var shitibox=document.getElementById("shiti-box");
+			//var shiti='<div class="shiti"><p><label>题干</label><input type="text" /><span>题干不能为空！</span></p><p class="textarea"><label>选项</label><textarea name="" rows="4"></textarea><span>A,B,C,D,各个选项用英文","隔开</span></p><p><label>答案</label><input type="text" hspace="4" /><span>题干不能为空！</span></p><p class="textarea"><label>试题解析</label><textarea name="" rows="4"></textarea><span>题干不能为空！</span></p><p><label>分值</label><input type="text" /><span>题干不能为空！</span></p><p class="textarea"><label>试题描述</label><textarea name="" rows="4"></textarea><span>题干不能为空！</span></p></div>';
+			var shiti=document.getElementById("shiti-box").getElementsByTagName("li")[0].innerHTML;
+			function addshiti(){
+				var newst=document.createElement("li");
+				newst.innerHTML=shiti;
+				shitibox.appendChild(newst);
+				
+				
+				
+			}
+			add.onclick=function(){
+				
+					addshiti();
+				
+			}
+		}
+		 
+		
+	</script>

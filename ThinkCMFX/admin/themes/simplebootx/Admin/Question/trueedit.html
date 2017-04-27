@@ -3,15 +3,32 @@
 <body class="J_scroll_fixed">
 <div class="wrap J_check_wrap">
 <ul class="nav nav-tabs">
-    <li><a href="{:U('Question/itembank')}">所有试题</a></li>
-    <li class="active"><a href="{:U('Question/itembankadd')}"  target="_self">试题修改</a></li>
+    <li><a href="{:U('Question/ture')}">所有真题</a></li>
+    <li class="active"><a href="{:U('Question/truekedit')}"  target="_self">真题修改</a></li>
+    <li><a href="#">添加材料试题</a></li>
 </ul>
-<form class="form-horizontal js-ajax-form" action="{:U('Question/itembankedit_post')}" method="post">
+<form class="form-horizontal js-ajax-form" action="{:U('Question/trueedit_post')}" method="post">
 
 <div class="col-auto">
     <div class="table_full">
         <table width="100%" cellpadding="2" cellspacing="2">
             <tr>
+                <th width="80">试卷名称</th>
+                <td>
+                    <input type="text" name="eid" value="{$item.eid}" style="width: 100px"/>年司国家司法考试试题
+                </td>
+            </tr>
+            <tr>
+                <th width="80">试卷类型</th>
+                <td>
+                    <select name="etid" class="normal_select">
+                        <option <if condition="$item.te_type eq 0">selected</if>>卷一</option>
+                        <option <if condition="$item.te_type eq 1">selected</if>>卷二</option>
+                        <option <if condition="$item.te_type eq 2">selected</if>>卷三</option>
+                    </select>
+                </td>
+            </tr>
+             <tr>
                 <th width="80">试题类型</th>
                 <td>
                     <select name="te_type" class="normal_select">
@@ -20,24 +37,6 @@
                     </select>
                 </td>
             </tr>
-            <tr>
-                <th width="80">所属科目</th>
-                <td>
-                   <select name="sid">
-                                        <!--  <option value="">选择分类</option> -->
-                                          <volist name="su" id="vo">
-
-                                               <eq name="vo.sid" value="$item.sid">
-                                                   <option value="{$vo.sid}" selected >{$vo.stitle}</option>
-                                                <else />
-                                                   <option value="{$vo.sid}" >{$vo.stitle}</option>
-                                               </eq> 
-
-                                        </volist> 
-                    </select>
-                </td>
-            </tr>
-
             <tr>
                 <th width="80">题干</th>
                 <td>
@@ -63,13 +62,13 @@
                 </td>
 
             </tr>
-            <tr>
-                <th width="80">试题解析</th>
-                <td>
-                    <textarea name='parsing' id='parsing' style='width:98%;height:150px;'>{$item.parsing}</textarea>
-                </td>
-            </tr>
-            <tr>
+             <tr>
+                    <th width="80">试题解析</th>
+                    <td>
+                        <textarea name='parsing' id='parsing' style='width:98%;height:150px;'>{$item.parsing}</textarea>
+                    </td>
+                </tr>
+                 <tr>
                 <th width="80">考点</th>
                 <td>
                     <input type="text" value="暂无" name="point" value="{$item.ncertain}" />
@@ -85,28 +84,21 @@
                     </select>
                 </td>
             </tr>
-             <tr>
-                <th width="80">是否为不定项</th>
-                <td>
-                    <input type="radio" name="ncertain" value="0" <if condition="$item.point eq 0">checked="checked"</if>>否
-                    <input type="radio" name="ncertain" value="1" <if condition="$item.point eq 1">checked="checked"</if>>是
-                </td>
-            </tr>
-            <tr>
-                <th width="80">分值</th>
-                <td>
-                    <input type="text" value="{$item.score}" name="score" />
-                </td>
-            </tr>
-			<tr>
-                <th width="80">试题描述</th>
-                <td>
-					<input type="text" id="e_probability" name="info" value="{$item.info}" />
-                    <input type="hidden" name="type" value="{$item.type}">
-                    <input type="hidden" name="item_id" value="{$item.item_id}">
-                </td>
-            </tr>
-            </tbody>
+                <tr>
+                    <th width="80">分值</th>
+                    <td>
+                        <input type="text" value="{$item.score}" name="score" />
+                    </td>
+                </tr>
+                <tr>
+                    <th width="80">试题描述</th>
+                    <td>
+                        <input type="text" id="e_probability" name="info" value="{$item.info}" />
+                        <input type="hidden" name="type" value="{$item.type}">
+                        <input type="hidden" name="item_id" value="{$item.item_id}">
+                    </td>
+                </tr>
+                </tbody>
         </table>
     </div>
 </div>

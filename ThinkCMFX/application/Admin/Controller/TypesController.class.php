@@ -16,6 +16,7 @@ class TypesController extends AdminbaseController
 		$this->types_model = D("Common/Types");
 		$this->professional_model = D("Common/Professional");
 		$this->subjects_model=D("Common/Subjects");
+		$this->chapter_model=D("Common/Chapter");
 	}
 /**
  * --------------------------------分类---------------------------------------------------------------
@@ -84,7 +85,7 @@ class TypesController extends AdminbaseController
 					$this->error("保存失败！");
 				}
 			} else {
-				$this->error($this->ad_model->getError());
+				$this->error($this->types_model->getError());
 			}
 		}
 	}
@@ -310,7 +311,7 @@ public function classadd_post(){
 							->where("pid=$pid")
 							->getField('tid');
 
-			if ($this->professional_model->create()!==false) {
+			if ($this->subjects_model->create()!==false) {
 				if ($this->subjects_model->where("sid=$sid")->save($data)!==false) {
 					$this->success("保存成功！", U("Types/classindex"));
 				} else {
@@ -321,4 +322,109 @@ public function classadd_post(){
 			}
 		}
 	}
+	/**
+	 * <------------------------------------------
+	 * 章节管理-------------------------------------------------------------------------->
+	 */
+	/**
+	 * 章节列表
+	 * @return [type] [description]
+	 */
+	public function chapter()
+	{
+      $chapter=$this
+		->chapter_model
+		->join('cmf_subjects on cmf_subjects.sid = cmf_chapter.sid')
+        ->select();
+		$this->assign("chapter",$chapter);
+        $this->display();
+	}
+	/**
+	 * 章节添加
+	 */
+	public function chapteradd()
+	{
+		 $su=$this->subjects_model->select();
+	   	 $this->assign("su",$su);
+	   	 $this->display();
+	}
+	/**
+	 * 章节添加提交
+	 */
+    public function chapteradd_post()
+    {
+    	if(IS_POST){
+			$data['ctitle']=I('ctitle');
+			$data['ctime']=time();
+			$data['sid']=I('sid');
+			//var_dump($data);die;
+			if ($this->chapter_model->create($data)!==false){
+				if ($this->chapter_model->add($data)!==false) {
+					$this->success(L('ADD_SUCCESS'), U("types/chapter"));
+				} else {
+					$this->error(L('ADD_FAILED'));
+				}
+			} else {
+				$this->error($this->chapter_model->getError());
+			}
+		
+		}
+    }
+  /**
+   * 章节移除
+   */
+  public function chapterdelete()
+  {
+		if(isset($_GET['id'])){
+			$id = intval(I("get.id"));
+			if ($this->chapter_model->where("cid=$id")->delete()!==false) {
+				$this->success("删除成功！");
+			} else {
+				$this->error("删除失败！");
+			}
+		}
+		if(isset($_POST['cids'])){
+			$ids=join(",",$_POST['cids']);
+			//var_dump($cids);die;
+			if ($this->chapter_model->where("cid in ($ids)")->delete()!==false) {
+				$this->success("删除成功！");
+			} else {
+				$this->error("删除失败！");
+			}
+		}
+	}
+ /**
+  * 章节编辑
+  */
+ public function chapteredit()
+ {
+        $id=I("get.id",0,'intval');
+		$ch=$this->chapter_model->where(array('cid'=>$id))->find();
+		$su=$this->subjects_model->select();
+   	    $this->assign("su",$su);
+		$this->assign('ch',$ch);
+		$this->display();
+ }
+ /**
+  * 章节编辑提交
+  */
+ public function chapteredit_post()
+ {
+      if (IS_POST) {
+			$cid=I('cid');
+			$data['sid']=I('sid');
+
+			$data['ctitle']=I('ctitle');
+			$data['ptime']=time();
+			if ($this->chapter_model->create()!==false) {
+				if ($this->chapter_model->where("cid=$cid")->save($data)!==false) {
+					$this->success("保存成功！", U("Types/chapter"));
+				} else {
+					$this->error("保存失败！");
+				}
+			} else {
+				$this->error($this->chapter_model->getError());
+			}
+		}
+ }
 }
